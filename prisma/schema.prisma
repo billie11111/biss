@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://genestory:Gs32563256@genestory-test-postgresql.c8qs7yhguqyn.ap-northeast-2.rds.amazonaws.com:5432/biss"
+  schemas  = ["biss"]
+}
+
+model BissQuestions {
+  id            Int          @id @default(autoincrement())
+  question      String
+  biss_answer   BissAnswers?
+  bissAnswersId Int?         @unique
+
+  @@map("biss_questions")
+  @@schema("biss")
+}
+
+model BissAnswers {
+  id              Int           @id @default(autoincrement())
+  answer1         String
+  answer2         String
+  answer3         String
+  answer4         String
+  biss_questions  BissQuestions @relation(fields: [bissQuestionsId], references: [id])
+  bissQuestionsId Int           @unique
+
+  @@map("biss_answers")
+  @@schema("biss")
+}
+
+model BissResults {
+  id          Int  @id @default(autoincrement())
+  biss_result Json
+
+  @@schema("biss")
+}
+
+model BissRawData {
+  id         Int    @id @default(autoincrement())
+  RawData    Json
+  gender     Gender
+  birth_year Int
+
+  @@schema("biss")
+}
+
+enum Gender {
+  M
+  F
+
+  @@schema("biss")
+}
