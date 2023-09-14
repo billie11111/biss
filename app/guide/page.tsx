@@ -16,7 +16,6 @@ const Wrapper = styled.main`
 `;
 
 export default function Guide() {
-  console.log(process.env.NEXT_PUBLIC_DATABASE_URL)
   return (
     <Wrapper>
       <h1 className="sr-only">테스트 안내사항과 테스트 문항 리스트 화면</h1>
